@@ -57,7 +57,7 @@ DELETE FROM product_units
 WHERE product_id = 101;
 
 -- UPDATE
-/* 1.We want to add the current_quantity to the product_units table. 
+/ 1.We want to add the current_quantity to the product_units table. 
 First, add a new column, current_quantity to the table using the following syntax.
 
 ALTER TABLE product_units
@@ -74,3 +74,26 @@ Finally, make sure you have a WHERE statement to update the right row,
 When you have all of these components, you can run the update statement. */
 
 
+WITH last_quantity AS (
+	SELECT pu.product_id, quantity
+	FROM product_units AS pu
+	LEFT JOIN
+	(
+		SELECT product_id, quantity
+		FROM
+		(
+			SELECT product_id, quantity
+			,ROW_NUMBER() OVER (PARTITION by product_id ORDER BY market_date DESC) as last_transaction
+			FROM vendor_inventory
+		) AS x
+		WHERE x.last_transaction = 1
+	) AS vid
+		ON pu.product_id = vid.product_id
+)
+
+UPDATE product_units
+SET current_quantity = (
+	SELECT COALESCE(last_quantity.quantity,0)
+	FROM last_quantity
+	WHERE product_units.product_id = last_quantity.product_id
+);
