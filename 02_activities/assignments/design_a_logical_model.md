@@ -15,7 +15,9 @@ _Hint, search type 1 vs type 2 slowly changing dimensions._
 
 Bonus: Are there privacy implications to this, why or why not?
 ```
-Your answer...
+Yes, there are privacy implications related to storing customer addresses, especially if we're retaining historical data (as in the Type 2 SCD). Keeping multiple addresses can lead to sensitive information being exposed if proper data protection measures aren’t implemented. For instance, if an address database is compromised, past and current addresses could be accessed, potentially revealing a customer's location history.
+
+Moreover, if customers are unaware that their address history is being stored, it raises ethical concerns about consent and transparency. Organizations must ensure they comply with privacy laws (like GDPR or CCPA) and implement security measures to protect this personal information. Overall, managing customer addresses requires careful consideration of privacy risks and the importance of data protection.
 ```
 
 ## Question 4
@@ -23,7 +25,11 @@ Review the AdventureWorks Schema [here](https://i.stack.imgur.com/LMu4W.gif)
 
 Highlight at least two differences between it and your ERD. Would you change anything in yours?
 ```
-Your answer...
+    Physical vs. Logical Design: The AdventureWorks schema is a physical diagram, meaning it includes specific data types, indexes, and constraints, while our ERD is a logical design that focuses on the relationships and structure without delving into physical implementation details.
+
+    Complexity and Detail: The AdventureWorks schema is more complex, featuring additional tables like Product, Sales, and Inventory, along with more detailed relationships and attributes. In contrast, our schema is simpler, focusing on core entities like Customer, Order, and Shift.
+
+Given these differences, I would consider adding more detail to our ERD. This would help create a more comprehensive model, similar to the complexity seen in AdventureWorks.
 ```
 
 # Criteria
